@@ -1,0 +1,14 @@
+/extra
+
+/.kiro
+
+/.pytest_cache
+
+/data
+
+/extra
+
+/knowledge_engineering/__pycache__
+/knowledge_engineering/tests/__pycache__
+/knowledge_engineering/venv
+

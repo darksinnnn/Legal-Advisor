@@ -1,0 +1,1611 @@
+{
+  "34": {
+    "section_id": "34",
+    "description": "Acts done by several persons in furtherance of common intention - Each person is liable as if done by him alone",
+    "conditions": [
+      {"knowledge_unit": "common_intention", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "multiple_persons", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "criminal_act_committed", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"common_intention_established": true}
+  },
+  "107": {
+    "section_id": "107",
+    "description": "Abetment of a thing - Instigating, engaging in conspiracy, or intentionally aiding the commission of an offence",
+    "conditions": [
+      {"knowledge_unit": "abetment", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "criminal_act_committed", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"abetment_established": true}
+  },
+  "109": {
+    "section_id": "109",
+    "description": "Punishment of abetment if the act abetted is committed - Same punishment as for the offence",
+    "conditions": [
+      {"knowledge_unit": "abetment_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "criminal_act_committed", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "120A": {
+    "section_id": "120A",
+    "description": "Criminal conspiracy - Two or more persons agree to do an illegal act or legal act by illegal means",
+    "conditions": [
+      {"knowledge_unit": "criminal_conspiracy", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "multiple_persons", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"conspiracy_established": true}
+  },
+  "120B": {
+    "section_id": "120B",
+    "description": "Punishment of criminal conspiracy",
+    "conditions": [
+      {"knowledge_unit": "conspiracy_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "141": {
+    "section_id": "141",
+    "description": "Unlawful assembly - Assembly of five or more persons with common object to commit offence",
+    "conditions": [
+      {"knowledge_unit": "unlawful_assembly", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "five_or_more_persons", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"unlawful_assembly_established": true}
+  },
+  "143": {
+    "section_id": "143",
+    "description": "Punishment for being member of unlawful assembly - Imprisonment up to 6 months, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "unlawful_assembly_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "147": {
+    "section_id": "147",
+    "description": "Rioting - Use of force or violence by unlawful assembly or any member thereof",
+    "conditions": [
+      {"knowledge_unit": "rioting", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "unlawful_assembly", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "use_of_force", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"rioting_established": true}
+  },
+  "148": {
+    "section_id": "148",
+    "description": "Rioting armed with deadly weapon - Imprisonment up to 3 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "rioting_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "use_of_weapon", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "149": {
+    "section_id": "149",
+    "description": "Every member of unlawful assembly guilty of offence committed in prosecution of common object",
+    "conditions": [
+      {"knowledge_unit": "unlawful_assembly_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "criminal_act_committed", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  }
+,
+  "160": {
+    "section_id": "160",
+    "description": "Committing affray - Fighting in a public place to the disturbance of public peace",
+    "conditions": [
+      {"knowledge_unit": "affray", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "public_place", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "166": {
+    "section_id": "166",
+    "description": "Public servant disobeying law with intent to cause injury to any person",
+    "conditions": [
+      {"knowledge_unit": "accused_is_public_servant", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "disobeyed_law", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intent_to_cause_injury", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "170": {
+    "section_id": "170",
+    "description": "Personating a public servant - Pretending to hold office of public servant",
+    "conditions": [
+      {"knowledge_unit": "impersonation", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "impersonated_public_servant", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "171": {
+    "section_id": "171",
+    "description": "Wearing garb or carrying token used by public servant with fraudulent intent",
+    "conditions": [
+      {"knowledge_unit": "impersonation", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "wore_uniform_of_public_servant", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "fraudulent_intent", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "186": {
+    "section_id": "186",
+    "description": "Obstructing public servant in discharge of public functions",
+    "conditions": [
+      {"knowledge_unit": "obstruction_of_public_servant", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "victim_is_public_servant", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "191": {
+    "section_id": "191",
+    "description": "Giving false evidence - Making false statement in any stage of judicial proceeding",
+    "conditions": [
+      {"knowledge_unit": "false_evidence", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "judicial_proceeding", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"perjury_established": true}
+  },
+  "193": {
+    "section_id": "193",
+    "description": "Punishment for false evidence - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "perjury_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "195A": {
+    "section_id": "195A",
+    "description": "Threatening or inducing any person to give false evidence",
+    "conditions": [
+      {"knowledge_unit": "threat", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "induced_false_evidence", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "201": {
+    "section_id": "201",
+    "description": "Causing disappearance of evidence of offence or giving false information to screen offender",
+    "conditions": [
+      {"knowledge_unit": "destroyed_evidence", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "criminal_act_committed", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "204": {
+    "section_id": "204",
+    "description": "Destruction of document or electronic record to prevent its production as evidence",
+    "conditions": [
+      {"knowledge_unit": "destroyed_document", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intent_to_prevent_evidence", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "211": {
+    "section_id": "211",
+    "description": "False charge of offence made with intent to injure",
+    "conditions": [
+      {"knowledge_unit": "false_charge", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intent_to_cause_injury", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "212": {
+    "section_id": "212",
+    "description": "Harbouring offender - Giving shelter to person known to be an offender",
+    "conditions": [
+      {"knowledge_unit": "harboured_offender", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "knowledge_of_offence", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "216A": {
+    "section_id": "216A",
+    "description": "Penalty for harbouring robbers or dacoits",
+    "conditions": [
+      {"knowledge_unit": "harboured_offender", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "offender_is_robber_or_dacoit", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  }
+,
+  "224": {
+    "section_id": "224",
+    "description": "Resistance or obstruction by a person to his lawful apprehension",
+    "conditions": [
+      {"knowledge_unit": "resisted_arrest", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "228": {
+    "section_id": "228",
+    "description": "Intentional insult or interruption to public servant sitting in judicial proceeding",
+    "conditions": [
+      {"knowledge_unit": "insulted_court", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "judicial_proceeding", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "268": {
+    "section_id": "268",
+    "description": "Public nuisance - Act causing common injury, danger or annoyance to the public",
+    "conditions": [
+      {"knowledge_unit": "public_nuisance", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "269": {
+    "section_id": "269",
+    "description": "Negligent act likely to spread infection of disease dangerous to life",
+    "conditions": [
+      {"knowledge_unit": "negligence", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "spread_disease", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "270": {
+    "section_id": "270",
+    "description": "Malignant act likely to spread infection of disease dangerous to life",
+    "conditions": [
+      {"knowledge_unit": "malignant_intent", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "spread_disease", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "279": {
+    "section_id": "279",
+    "description": "Rash driving or riding on a public way - Endangering human life or likely to cause hurt",
+    "conditions": [
+      {"knowledge_unit": "rash_driving", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "public_place", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"rash_driving_established": true}
+  },
+  "280": {
+    "section_id": "280",
+    "description": "Rash navigation of vessel",
+    "conditions": [
+      {"knowledge_unit": "rash_navigation", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "vessel_involved", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "284": {
+    "section_id": "284",
+    "description": "Negligent conduct with respect to poisonous substance",
+    "conditions": [
+      {"knowledge_unit": "negligence", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "poisonous_substance", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "285": {
+    "section_id": "285",
+    "description": "Negligent conduct with respect to fire or combustible matter",
+    "conditions": [
+      {"knowledge_unit": "negligence", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "fire_involved", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "286": {
+    "section_id": "286",
+    "description": "Negligent conduct with respect to explosive substance",
+    "conditions": [
+      {"knowledge_unit": "negligence", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "explosive_substance", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "292": {
+    "section_id": "292",
+    "description": "Sale of obscene books, etc.",
+    "conditions": [
+      {"knowledge_unit": "obscene_material", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "sale_or_distribution", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "295": {
+    "section_id": "295",
+    "description": "Injuring or defiling place of worship with intent to insult the religion of any class",
+    "conditions": [
+      {"knowledge_unit": "defiled_place_of_worship", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intent_to_insult_religion", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "295A": {
+    "section_id": "295A",
+    "description": "Deliberate and malicious acts intended to outrage religious feelings of any class",
+    "conditions": [
+      {"knowledge_unit": "outraged_religious_feelings", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "deliberate_act", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "298": {
+    "section_id": "298",
+    "description": "Uttering words with deliberate intent to wound religious feelings",
+    "conditions": [
+      {"knowledge_unit": "wounded_religious_feelings", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "deliberate_act", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "299": {
+    "section_id": "299",
+    "description": "Culpable homicide - Causing death with intention or knowledge that act is likely to cause death",
+    "conditions": [
+      {"knowledge_unit": "caused_death", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "knowledge_likely_to_cause_death", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"culpable_homicide_established": true}
+  },
+  "300": {
+    "section_id": "300",
+    "description": "Murder - Culpable homicide is murder if done with intention of causing death or bodily injury sufficient to cause death",
+    "conditions": [
+      {"knowledge_unit": "caused_death", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intention_to_cause_death", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [
+      {"knowledge_unit": "grave_sudden_provocation", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "private_defense_exceeded", "operator": "equals", "expected_value": true}
+    ],
+    "derived_facts": {"murder_established": true}
+  },
+  "302": {
+    "section_id": "302",
+    "description": "Punishment for murder - Death or imprisonment for life and fine",
+    "conditions": [
+      {"knowledge_unit": "murder_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "304": {
+    "section_id": "304",
+    "description": "Culpable homicide not amounting to murder - Imprisonment up to 10 years with fine",
+    "conditions": [
+      {"knowledge_unit": "caused_death", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intention_to_cause_death", "operator": "equals", "expected_value": false},
+      {"knowledge_unit": "knowledge_likely_to_cause_death", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "304A": {
+    "section_id": "304A",
+    "description": "Causing death by negligence - Imprisonment up to 2 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "caused_death", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "negligence", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intention_to_cause_death", "operator": "equals", "expected_value": false}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "304B": {
+    "section_id": "304B",
+    "description": "Dowry death - Death of woman within 7 years of marriage caused by cruelty related to dowry demand",
+    "conditions": [
+      {"knowledge_unit": "caused_death", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "victim_is_woman", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "dowry_demand", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "cruelty_by_husband_or_relatives", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "within_seven_years_of_marriage", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"dowry_death_established": true}
+  },
+  "306": {
+    "section_id": "306",
+    "description": "Abetment of suicide - If any person commits suicide, whoever abets the commission shall be punished",
+    "conditions": [
+      {"knowledge_unit": "victim_committed_suicide", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "abetment", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "307": {
+    "section_id": "307",
+    "description": "Attempt to murder - Imprisonment up to 10 years and fine; if hurt caused, imprisonment for life",
+    "conditions": [
+      {"knowledge_unit": "attempt_to_murder", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intention_to_cause_death", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "308": {
+    "section_id": "308",
+    "description": "Attempt to commit culpable homicide - Imprisonment up to 3 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "attempt_to_cause_death", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "knowledge_likely_to_cause_death", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intention_to_cause_death", "operator": "equals", "expected_value": false}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  }
+,
+  "312": {
+    "section_id": "312",
+    "description": "Causing miscarriage - Voluntarily causing a woman with child to miscarry",
+    "conditions": [
+      {"knowledge_unit": "caused_miscarriage", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "victim_is_woman", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "without_consent", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [
+      {"knowledge_unit": "done_in_good_faith_to_save_life", "operator": "equals", "expected_value": true}
+    ],
+    "derived_facts": {}
+  },
+  "319": {
+    "section_id": "319",
+    "description": "Hurt - Causing bodily pain, disease or infirmity to any person",
+    "conditions": [
+      {"knowledge_unit": "caused_hurt", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"hurt_established": true}
+  },
+  "320": {
+    "section_id": "320",
+    "description": "Grievous hurt - Emasculation, permanent privation of sight/hearing, fracture, disfiguration etc.",
+    "conditions": [
+      {"knowledge_unit": "caused_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "grievous_hurt", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"grievous_hurt_established": true}
+  },
+  "321": {
+    "section_id": "321",
+    "description": "Voluntarily causing hurt - Doing any act with intention or knowledge of causing hurt",
+    "conditions": [
+      {"knowledge_unit": "caused_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "voluntarily", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "323": {
+    "section_id": "323",
+    "description": "Punishment for voluntarily causing hurt - Imprisonment up to 1 year, or fine up to Rs. 1000, or both",
+    "conditions": [
+      {"knowledge_unit": "caused_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "voluntarily", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [
+      {"knowledge_unit": "private_defense", "operator": "equals", "expected_value": true}
+    ],
+    "derived_facts": {}
+  },
+  "324": {
+    "section_id": "324",
+    "description": "Voluntarily causing hurt by dangerous weapons or means - Imprisonment up to 3 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "caused_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "voluntarily", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "use_of_weapon", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [
+      {"knowledge_unit": "private_defense", "operator": "equals", "expected_value": true}
+    ],
+    "derived_facts": {}
+  },
+  "325": {
+    "section_id": "325",
+    "description": "Punishment for voluntarily causing grievous hurt - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "caused_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "grievous_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "voluntarily", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [
+      {"knowledge_unit": "private_defense", "operator": "equals", "expected_value": true}
+    ],
+    "derived_facts": {}
+  },
+  "326": {
+    "section_id": "326",
+    "description": "Voluntarily causing grievous hurt by dangerous weapons or means - Imprisonment for life or up to 10 years and fine",
+    "conditions": [
+      {"knowledge_unit": "caused_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "grievous_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "voluntarily", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "use_of_weapon", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [
+      {"knowledge_unit": "private_defense", "operator": "equals", "expected_value": true}
+    ],
+    "derived_facts": {}
+  },
+  "326A": {
+    "section_id": "326A",
+    "description": "Voluntarily causing grievous hurt by use of acid - Imprisonment not less than 10 years, extendable to imprisonment for life and fine",
+    "conditions": [
+      {"knowledge_unit": "caused_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "grievous_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "acid_attack", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"acid_attack_established": true}
+  },
+  "326B": {
+    "section_id": "326B",
+    "description": "Voluntarily throwing or attempting to throw acid - Imprisonment not less than 5 years extendable to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "acid_attack", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "334": {
+    "section_id": "334",
+    "description": "Voluntarily causing hurt on provocation - Imprisonment up to 1 month, or fine up to Rs. 500, or both",
+    "conditions": [
+      {"knowledge_unit": "caused_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "voluntarily", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "provocation", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "336": {
+    "section_id": "336",
+    "description": "Act endangering life or personal safety of others - Rash or negligent act",
+    "conditions": [
+      {"knowledge_unit": "negligence", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "endangered_life", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "337": {
+    "section_id": "337",
+    "description": "Causing hurt by act endangering life or personal safety of others",
+    "conditions": [
+      {"knowledge_unit": "caused_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "negligence", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "338": {
+    "section_id": "338",
+    "description": "Causing grievous hurt by act endangering life or personal safety of others",
+    "conditions": [
+      {"knowledge_unit": "caused_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "grievous_hurt", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "negligence", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "339": {
+    "section_id": "339",
+    "description": "Wrongful restraint - Voluntarily obstructing a person to prevent that person from proceeding in any direction",
+    "conditions": [
+      {"knowledge_unit": "wrongful_restraint", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "voluntarily", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "340": {
+    "section_id": "340",
+    "description": "Wrongful confinement - Wrongfully restraining a person so as to prevent that person from proceeding beyond certain circumscribing limits",
+    "conditions": [
+      {"knowledge_unit": "wrongful_confinement", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"wrongful_confinement_established": true}
+  },
+  "341": {
+    "section_id": "341",
+    "description": "Punishment for wrongful restraint - Imprisonment up to 1 month, or fine up to Rs. 500, or both",
+    "conditions": [
+      {"knowledge_unit": "wrongful_restraint", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "342": {
+    "section_id": "342",
+    "description": "Punishment for wrongful confinement - Imprisonment up to 1 year, or fine up to Rs. 1000, or both",
+    "conditions": [
+      {"knowledge_unit": "wrongful_confinement_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "346": {
+    "section_id": "346",
+    "description": "Wrongful confinement in secret - Imprisonment up to 2 years in addition to other punishment",
+    "conditions": [
+      {"knowledge_unit": "wrongful_confinement", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "secret_confinement", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "349": {
+    "section_id": "349",
+    "description": "Force - A person is said to use force to another if he causes motion, change of motion, or cessation of motion",
+    "conditions": [
+      {"knowledge_unit": "use_of_force", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"force_established": true}
+  },
+  "350": {
+    "section_id": "350",
+    "description": "Criminal force - Using force intentionally to any person without that person's consent to cause injury, fear or annoyance",
+    "conditions": [
+      {"knowledge_unit": "criminal_force", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "without_consent", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"criminal_force_established": true}
+  },
+  "351": {
+    "section_id": "351",
+    "description": "Assault - Making any gesture or preparation intending or knowing it to be likely to cause apprehension of criminal force",
+    "conditions": [
+      {"knowledge_unit": "assault", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"assault_established": true}
+  },
+  "352": {
+    "section_id": "352",
+    "description": "Punishment for assault or criminal force otherwise than on grave provocation - Imprisonment up to 3 months, or fine up to Rs. 500, or both",
+    "conditions": [
+      {"knowledge_unit": "assault_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [
+      {"knowledge_unit": "grave_provocation", "operator": "equals", "expected_value": true}
+    ],
+    "derived_facts": {}
+  },
+  "354": {
+    "section_id": "354",
+    "description": "Assault or criminal force to woman with intent to outrage her modesty - Imprisonment not less than 1 year extendable to 5 years and fine",
+    "conditions": [
+      {"knowledge_unit": "assault", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "victim_is_woman", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intent_to_outrage_modesty", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "354A": {
+    "section_id": "354A",
+    "description": "Sexual harassment - Physical contact, demand for sexual favours, showing pornography, making sexually coloured remarks",
+    "conditions": [
+      {"knowledge_unit": "sexual_harassment", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "354B": {
+    "section_id": "354B",
+    "description": "Assault or use of criminal force to woman with intent to disrobe - Imprisonment not less than 3 years extendable to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "assault", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "victim_is_woman", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intent_to_disrobe", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "354C": {
+    "section_id": "354C",
+    "description": "Voyeurism - Watching or capturing image of a woman engaging in a private act",
+    "conditions": [
+      {"knowledge_unit": "voyeurism", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "victim_is_woman", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "354D": {
+    "section_id": "354D",
+    "description": "Stalking - Following a woman, contacting despite disinterest, monitoring use of internet/email/electronic communication",
+    "conditions": [
+      {"knowledge_unit": "stalking", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "victim_is_woman", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "359": {
+    "section_id": "359",
+    "description": "Kidnapping - Kidnapping from India or from lawful guardianship",
+    "conditions": [
+      {"knowledge_unit": "kidnapping", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"kidnapping_established": true}
+  },
+  "362": {
+    "section_id": "362",
+    "description": "Abduction - Compelling or inducing a person to go from any place by force or deceitful means",
+    "conditions": [
+      {"knowledge_unit": "abduction", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "use_of_force", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"abduction_established": true}
+  },
+  "363": {
+    "section_id": "363",
+    "description": "Punishment for kidnapping - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "kidnapping_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "364": {
+    "section_id": "364",
+    "description": "Kidnapping or abducting in order to murder - Imprisonment for life or rigorous imprisonment up to 10 years and fine",
+    "conditions": [
+      {"knowledge_unit": "kidnapping", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intention_to_cause_death", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "364A": {
+    "section_id": "364A",
+    "description": "Kidnapping for ransom - Imprisonment for life and fine; death if kidnapped person is killed",
+    "conditions": [
+      {"knowledge_unit": "kidnapping", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "ransom_demand", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "365": {
+    "section_id": "365",
+    "description": "Kidnapping or abducting with intent secretly and wrongfully to confine person - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "kidnapping", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "wrongful_confinement", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "366": {
+    "section_id": "366",
+    "description": "Kidnapping, abducting or inducing woman to compel her marriage - Imprisonment up to 10 years and fine",
+    "conditions": [
+      {"knowledge_unit": "kidnapping", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "victim_is_woman", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "forced_marriage", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "366A": {
+    "section_id": "366A",
+    "description": "Procuration of minor girl - Inducing any minor girl under 18 for illicit intercourse",
+    "conditions": [
+      {"knowledge_unit": "victim_is_minor", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "victim_is_woman", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "procuration", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "370": {
+    "section_id": "370",
+    "description": "Trafficking of person - Recruiting, transporting, harbouring persons by use of threats, force, coercion for exploitation",
+    "conditions": [
+      {"knowledge_unit": "human_trafficking", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"trafficking_established": true}
+  },
+  "372": {
+    "section_id": "372",
+    "description": "Selling minor for purposes of prostitution - Imprisonment up to 10 years and fine",
+    "conditions": [
+      {"knowledge_unit": "victim_is_minor", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "sold_for_prostitution", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "375": {
+    "section_id": "375",
+    "description": "Rape - Sexual intercourse with a woman against her will, without her consent, or with consent obtained by coercion",
+    "conditions": [
+      {"knowledge_unit": "sexual_assault", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "victim_is_woman", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "without_consent", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"rape_established": true}
+  },
+  "376": {
+    "section_id": "376",
+    "description": "Punishment for rape - Rigorous imprisonment not less than 10 years extendable to imprisonment for life and fine",
+    "conditions": [
+      {"knowledge_unit": "rape_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  }
+,
+  "378": {
+    "section_id": "378",
+    "description": "Theft - Whoever intends to take dishonestly any movable property out of the possession of any person without that person's consent",
+    "conditions": [
+      {"knowledge_unit": "dishonest_intention", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "property_type", "operator": "equals", "expected_value": "movable"},
+      {"knowledge_unit": "moved_property", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "without_consent", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [
+      {"knowledge_unit": "good_faith_claim", "operator": "equals", "expected_value": true}
+    ],
+    "derived_facts": {"theft_established": true}
+  },
+  "379": {
+    "section_id": "379",
+    "description": "Punishment for theft - Imprisonment up to 3 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "theft_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "380": {
+    "section_id": "380",
+    "description": "Theft in dwelling house - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "theft_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "in_dwelling_house", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "381": {
+    "section_id": "381",
+    "description": "Theft by clerk or servant of property in possession of master - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "theft_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "accused_is_servant_or_clerk", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "382": {
+    "section_id": "382",
+    "description": "Theft after preparation made for causing death, hurt or restraint in order to committing of theft",
+    "conditions": [
+      {"knowledge_unit": "theft_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "preparation_for_violence", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "383": {
+    "section_id": "383",
+    "description": "Extortion - Putting any person in fear of injury and thereby dishonestly inducing the person to deliver property",
+    "conditions": [
+      {"knowledge_unit": "extortion", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "threat", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "dishonest_intention", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"extortion_established": true}
+  },
+  "384": {
+    "section_id": "384",
+    "description": "Punishment for extortion - Imprisonment up to 3 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "extortion_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "385": {
+    "section_id": "385",
+    "description": "Putting person in fear of injury in order to commit extortion - Imprisonment up to 2 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "threat", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "extortion", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "390": {
+    "section_id": "390",
+    "description": "Robbery - Theft or extortion is robbery if offender causes or attempts to cause death, hurt, or wrongful restraint",
+    "conditions": [
+      {"knowledge_unit": "robbery", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "use_of_force", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "dishonest_intention", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"robbery_established": true}
+  },
+  "392": {
+    "section_id": "392",
+    "description": "Punishment for robbery - Rigorous imprisonment up to 10 years and fine",
+    "conditions": [
+      {"knowledge_unit": "robbery_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "393": {
+    "section_id": "393",
+    "description": "Attempt to commit robbery - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "attempted_robbery", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "395": {
+    "section_id": "395",
+    "description": "Dacoity - Robbery committed by five or more persons conjointly",
+    "conditions": [
+      {"knowledge_unit": "dacoity", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "five_or_more_persons", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "robbery", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"dacoity_established": true}
+  },
+  "396": {
+    "section_id": "396",
+    "description": "Dacoity with murder - Imprisonment for life or death and fine",
+    "conditions": [
+      {"knowledge_unit": "dacoity_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "caused_death", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "397": {
+    "section_id": "397",
+    "description": "Robbery or dacoity with attempt to cause death or grievous hurt - Imprisonment not less than 7 years",
+    "conditions": [
+      {"knowledge_unit": "robbery", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "attempt_to_cause_death", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "399": {
+    "section_id": "399",
+    "description": "Making preparation to commit dacoity - Imprisonment up to 10 years and fine",
+    "conditions": [
+      {"knowledge_unit": "preparation_for_dacoity", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "403": {
+    "section_id": "403",
+    "description": "Dishonest misappropriation of property - Whoever dishonestly misappropriates or converts to his own use any movable property",
+    "conditions": [
+      {"knowledge_unit": "dishonest_intention", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "property_in_possession", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "converted_to_own_use", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"misappropriation_established": true}
+  },
+  "405": {
+    "section_id": "405",
+    "description": "Criminal breach of trust - Whoever being entrusted with property dishonestly misappropriates or converts it",
+    "conditions": [
+      {"knowledge_unit": "breach_of_trust", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "entrusted_with_property", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "dishonest_intention", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"breach_of_trust_established": true}
+  },
+  "406": {
+    "section_id": "406",
+    "description": "Punishment for criminal breach of trust - Imprisonment up to 3 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "breach_of_trust_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "407": {
+    "section_id": "407",
+    "description": "Criminal breach of trust by carrier, wharfinger or warehouse-keeper - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "breach_of_trust_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "accused_is_carrier_or_warehouse", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "408": {
+    "section_id": "408",
+    "description": "Criminal breach of trust by clerk or servant - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "breach_of_trust_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "accused_is_servant_or_clerk", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "409": {
+    "section_id": "409",
+    "description": "Criminal breach of trust by public servant, banker, merchant or agent - Imprisonment for life or up to 10 years and fine",
+    "conditions": [
+      {"knowledge_unit": "breach_of_trust_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "accused_is_public_servant", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "411": {
+    "section_id": "411",
+    "description": "Dishonestly receiving stolen property - Imprisonment up to 3 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "received_stolen_property", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "knowledge_of_stolen", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "414": {
+    "section_id": "414",
+    "description": "Assisting in concealment of stolen property - Imprisonment up to 3 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "concealed_stolen_property", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "knowledge_of_stolen", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "415": {
+    "section_id": "415",
+    "description": "Cheating - Deceiving any person and thereby dishonestly inducing the person deceived to deliver property or to do or omit to do anything",
+    "conditions": [
+      {"knowledge_unit": "cheating", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "deception", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "dishonest_intention", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"cheating_established": true}
+  },
+  "417": {
+    "section_id": "417",
+    "description": "Punishment for cheating - Imprisonment up to 1 year, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "cheating_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "418": {
+    "section_id": "418",
+    "description": "Cheating with knowledge that wrongful loss may ensue to person whose interest offender is bound to protect",
+    "conditions": [
+      {"knowledge_unit": "cheating_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "breach_of_trust", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "419": {
+    "section_id": "419",
+    "description": "Cheating by personation - Imprisonment up to 3 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "cheating", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "impersonation", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "420": {
+    "section_id": "420",
+    "description": "Cheating and dishonestly inducing delivery of property - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "cheating", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "deception", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "dishonest_intention", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "induced_delivery", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  }
+,
+  "421": {
+    "section_id": "421",
+    "description": "Dishonest or fraudulent removal or concealment of property to prevent distribution among creditors",
+    "conditions": [
+      {"knowledge_unit": "dishonest_intention", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "concealed_property", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "prevent_creditor_distribution", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "425": {
+    "section_id": "425",
+    "description": "Mischief - Causing destruction or damage to property with intent to cause wrongful loss or damage",
+    "conditions": [
+      {"knowledge_unit": "mischief_to_property", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intent_to_cause_damage", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"mischief_established": true}
+  },
+  "426": {
+    "section_id": "426",
+    "description": "Punishment for mischief - Imprisonment up to 3 months, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "mischief_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "427": {
+    "section_id": "427",
+    "description": "Mischief causing damage to the amount of fifty rupees or more - Imprisonment up to 2 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "mischief_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "significant_damage", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "429": {
+    "section_id": "429",
+    "description": "Mischief by killing or maiming cattle or animal of value - Imprisonment up to 5 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "killed_animal", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intent_to_cause_damage", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "430": {
+    "section_id": "430",
+    "description": "Mischief by injury to works of irrigation or by wrongfully diverting water",
+    "conditions": [
+      {"knowledge_unit": "mischief_to_property", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "damaged_water_supply", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "435": {
+    "section_id": "435",
+    "description": "Mischief by fire or explosive substance with intent to cause damage - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "arson", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intent_to_cause_damage", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"arson_established": true}
+  },
+  "436": {
+    "section_id": "436",
+    "description": "Mischief by fire or explosive substance with intent to destroy house - Imprisonment for life or up to 10 years and fine",
+    "conditions": [
+      {"knowledge_unit": "arson_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "target_is_dwelling", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "441": {
+    "section_id": "441",
+    "description": "Criminal trespass - Entering into or remaining upon property in possession of another with intent to commit offence or intimidate",
+    "conditions": [
+      {"knowledge_unit": "entered_property", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "without_consent", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "property_owned_by_other", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"criminal_trespass_established": true}
+  },
+  "442": {
+    "section_id": "442",
+    "description": "House-trespass - Criminal trespass by entering into or remaining in any building, tent or vessel used as human dwelling",
+    "conditions": [
+      {"knowledge_unit": "criminal_trespass_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "in_dwelling_house", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"house_trespass_established": true}
+  },
+  "447": {
+    "section_id": "447",
+    "description": "Punishment for criminal trespass - Imprisonment up to 3 months, or fine up to Rs. 500, or both",
+    "conditions": [
+      {"knowledge_unit": "criminal_trespass_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "448": {
+    "section_id": "448",
+    "description": "Punishment for house-trespass - Imprisonment up to 1 year, or fine up to Rs. 1000, or both",
+    "conditions": [
+      {"knowledge_unit": "house_trespass_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "449": {
+    "section_id": "449",
+    "description": "House-trespass in order to commit offence punishable with death - Imprisonment for life or up to 10 years and fine",
+    "conditions": [
+      {"knowledge_unit": "house_trespass_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intention_to_cause_death", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "452": {
+    "section_id": "452",
+    "description": "House-trespass after preparation for hurt, assault or wrongful restraint - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "house_trespass_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "preparation_for_violence", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "453": {
+    "section_id": "453",
+    "description": "Lurking house-trespass - House-trespass by taking precautions to conceal such trespass",
+    "conditions": [
+      {"knowledge_unit": "house_trespass_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "concealed_trespass", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "454": {
+    "section_id": "454",
+    "description": "Lurking house-trespass in order to commit offence punishable with imprisonment - Imprisonment up to 3 years and fine",
+    "conditions": [
+      {"knowledge_unit": "house_trespass_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "concealed_trespass", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "criminal_act_committed", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "456": {
+    "section_id": "456",
+    "description": "Punishment for lurking house-trespass or house-breaking by night - Imprisonment up to 3 years and fine",
+    "conditions": [
+      {"knowledge_unit": "house_breaking", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "night_time", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "457": {
+    "section_id": "457",
+    "description": "Lurking house-trespass or house-breaking by night in order to commit offence punishable with imprisonment - Imprisonment up to 5 years and fine",
+    "conditions": [
+      {"knowledge_unit": "house_breaking", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "night_time", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "criminal_act_committed", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "461": {
+    "section_id": "461",
+    "description": "Dishonestly breaking open receptacle containing property - Imprisonment up to 2 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "broke_open_container", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "dishonest_intention", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "463": {
+    "section_id": "463",
+    "description": "Forgery - Making a false document or electronic record with intent to cause damage or to support any claim",
+    "conditions": [
+      {"knowledge_unit": "forgery", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "false_document", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"forgery_established": true}
+  },
+  "465": {
+    "section_id": "465",
+    "description": "Punishment for forgery - Imprisonment up to 2 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "forgery_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "467": {
+    "section_id": "467",
+    "description": "Forgery of valuable security, will, etc. - Imprisonment for life or up to 10 years and fine",
+    "conditions": [
+      {"knowledge_unit": "forgery_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "forged_valuable_security", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "468": {
+    "section_id": "468",
+    "description": "Forgery for purpose of cheating - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "forgery_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "cheating", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "471": {
+    "section_id": "471",
+    "description": "Using as genuine a forged document or electronic record",
+    "conditions": [
+      {"knowledge_unit": "used_forged_document", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "knowledge_of_forgery", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "489A": {
+    "section_id": "489A",
+    "description": "Counterfeiting currency notes or bank notes - Imprisonment for life or up to 10 years and fine",
+    "conditions": [
+      {"knowledge_unit": "counterfeiting", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "currency_notes", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "489B": {
+    "section_id": "489B",
+    "description": "Using as genuine forged or counterfeit currency notes or bank notes",
+    "conditions": [
+      {"knowledge_unit": "used_counterfeit_currency", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  }
+,
+  "494": {
+    "section_id": "494",
+    "description": "Marrying again during lifetime of husband or wife (Bigamy) - Imprisonment up to 7 years and fine",
+    "conditions": [
+      {"knowledge_unit": "bigamy", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [
+      {"knowledge_unit": "first_marriage_void", "operator": "equals", "expected_value": true}
+    ],
+    "derived_facts": {}
+  },
+  "495": {
+    "section_id": "495",
+    "description": "Same offence with concealment of former marriage - Imprisonment up to 10 years and fine",
+    "conditions": [
+      {"knowledge_unit": "bigamy", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "concealed_marriage", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "497": {
+    "section_id": "497",
+    "description": "Adultery - Sexual intercourse with the wife of another man without consent of that man",
+    "conditions": [
+      {"knowledge_unit": "adultery", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "498": {
+    "section_id": "498",
+    "description": "Enticing or taking away or detaining with criminal intent a married woman",
+    "conditions": [
+      {"knowledge_unit": "enticed_married_woman", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "criminal_intent", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "498A": {
+    "section_id": "498A",
+    "description": "Husband or relative of husband of a woman subjecting her to cruelty - Imprisonment up to 3 years and fine",
+    "conditions": [
+      {"knowledge_unit": "cruelty_by_husband_or_relatives", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "victim_is_woman", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"domestic_cruelty_established": true}
+  },
+  "499": {
+    "section_id": "499",
+    "description": "Defamation - Making or publishing any imputation concerning any person intending to harm reputation",
+    "conditions": [
+      {"knowledge_unit": "defamation", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intent_to_harm_reputation", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [
+      {"knowledge_unit": "truth_for_public_good", "operator": "equals", "expected_value": true}
+    ],
+    "derived_facts": {"defamation_established": true}
+  },
+  "500": {
+    "section_id": "500",
+    "description": "Punishment for defamation - Simple imprisonment up to 2 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "defamation_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "503": {
+    "section_id": "503",
+    "description": "Criminal intimidation - Threatening another with injury to person, reputation or property with intent to cause alarm",
+    "conditions": [
+      {"knowledge_unit": "threat", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "intent_to_intimidate", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {"criminal_intimidation_established": true}
+  },
+  "506": {
+    "section_id": "506",
+    "description": "Punishment for criminal intimidation - Imprisonment up to 2 years, or fine, or both; if threat to cause death or grievous hurt, up to 7 years",
+    "conditions": [
+      {"knowledge_unit": "criminal_intimidation_established", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "507": {
+    "section_id": "507",
+    "description": "Criminal intimidation by anonymous communication - Imprisonment up to 2 years in addition",
+    "conditions": [
+      {"knowledge_unit": "criminal_intimidation_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "anonymous_communication", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "509": {
+    "section_id": "509",
+    "description": "Word, gesture or act intended to insult the modesty of a woman - Imprisonment up to 3 years and fine",
+    "conditions": [
+      {"knowledge_unit": "insulted_modesty", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "victim_is_woman", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "510": {
+    "section_id": "510",
+    "description": "Misconduct in public by a drunken person - Imprisonment up to 24 hours, or fine up to Rs. 10, or both",
+    "conditions": [
+      {"knowledge_unit": "drunken_misconduct", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "public_place", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "511": {
+    "section_id": "511",
+    "description": "Punishment for attempting to commit offences punishable with imprisonment for life or other imprisonment",
+    "conditions": [
+      {"knowledge_unit": "attempted_offence", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "criminal_act_committed", "operator": "equals", "expected_value": false}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "153A": {
+    "section_id": "153A",
+    "description": "Promoting enmity between different groups on grounds of religion, race, place of birth, residence, language - Imprisonment up to 3 years, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "promoted_enmity", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "between_groups", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "171E": {
+    "section_id": "171E",
+    "description": "Punishment for bribery at elections - Imprisonment up to 1 year, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "bribery", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "election_related", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "171F": {
+    "section_id": "171F",
+    "description": "Punishment for undue influence or personation at an election - Imprisonment up to 1 year, or fine, or both",
+    "conditions": [
+      {"knowledge_unit": "undue_influence", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "election_related", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "376A": {
+    "section_id": "376A",
+    "description": "Punishment for causing death or resulting in persistent vegetative state of victim during rape - Imprisonment not less than 20 years extendable to life or death",
+    "conditions": [
+      {"knowledge_unit": "rape_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "caused_death", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  },
+  "376D": {
+    "section_id": "376D",
+    "description": "Gang rape - Imprisonment not less than 20 years extendable to life and fine",
+    "conditions": [
+      {"knowledge_unit": "rape_established", "operator": "equals", "expected_value": true},
+      {"knowledge_unit": "multiple_persons", "operator": "equals", "expected_value": true}
+    ],
+    "exceptions": [],
+    "derived_facts": {}
+  }
+}
