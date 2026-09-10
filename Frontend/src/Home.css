@@ -1,0 +1,391 @@
+:root {
+  --primary-color: #008080;
+  --primary-hover: #006666;
+  --accent-color: #4a90e2;
+  --text-light: #ffffff;
+  --text-dark: #333333;
+  --gradient-duration: 20s;
+  --transition-slow: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-standard: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInFromRight {
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes floatingElement {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+  50% { transform: scale(1.05); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); }
+  100% { transform: scale(1); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    var(--gradient-offset),
+    rgba(75, 75, 212, 0.9),
+    rgba(79, 41, 89, 0.95),
+    rgba(138, 43, 226, 0.9)
+  );
+  background-size: 200% 200%;
+  animation: gradientShift var(--gradient-duration) ease infinite;
+  color: var(--text-light);
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+/* Enhanced navbar with glass morphism */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  animation: fadeIn 0.8s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: slideInFromRight 0.8s ease;
+}
+
+.logo h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 0;
+  background: linear-gradient(45deg, #ffffff, #e0f7fa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  animation: fadeIn 1s ease;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: var(--transition-standard);
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background: white;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-links a:hover {
+  color: white;
+}
+
+.nav-links a:hover::after {
+  width: 70%;
+}
+
+.logout-button {
+  padding: 0.7rem 1.5rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: var(--transition-standard);
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced main content */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  animation: fadeIn 1.2s ease;
+}
+
+/* Hero section with floating animation */
+.hero-section {
+  text-align: center;
+  margin-bottom: 4rem;
+  animation: floatingElement 6s ease-in-out infinite;
+}
+
+.hero-section h2 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(45deg, #ffffff, #b3e5fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  letter-spacing: 1px;
+}
+
+.hero-section p {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Enhanced input section with glass morphism */
+.problem-input-section {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: var(--box-shadow);
+  margin-bottom: 3rem;
+  transition: var(--transition-standard);
+  animation: fadeIn 1.4s ease;
+  transform: translateY(0);
+}
+
+.problem-input-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.problem-input-section h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  text-align: center;
+  font-weight: 600;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-right: 0;
+}
+
+textarea {
+  width: 100%;
+  padding: 1.2rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1rem;
+  min-height: 150px;
+  transition: var(--transition-standard);
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.2);
+}
+
+.button-group {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+}
+
+.submit-button, .speech-button {
+  padding: 0.9rem 1.8rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition-standard);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button {
+  background-color: var(--primary-color);
+  color: white;
+  flex: 1;
+  max-width: 200px;
+}
+
+.submit-button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15);
+}
+
+.speech-button {
+  background-color: var(--accent-color);
+  color: white;
+  flex: 1;
+  max-width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.speech-button:hover {
+  background-color: #357abd;
+  transform: translateY(-3px);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* Enhanced pulse animation for the listening state */
+.speech-button.listening {
+  background-color: #dc3545;
+  animation: pulse 1.5s infinite;
+}
+
+.speech-button.listening::before {
+  content: '●';
+  color: white;
+  margin-right: 0.5rem;
+  animation: pulse 1.5s infinite;
+}
+
+/* Enhanced legal charges section */
+.legal-charges-section {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: var(--box-shadow);
+  margin-top: 2rem;
+  transition: var(--transition-standard);
+  animation: fadeIn 1.6s ease;
+}
+
+.legal-charges-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.legal-charges-section h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  text-align: center;
+  font-weight: 600;
+}
+
+.legal-charges-output {
+  white-space: pre-wrap;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.5s ease;
+}
+
+/* Enhanced footer */
+.footer {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 2rem;
+  margin-top: auto;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.disclaimer {
+  max-width: 800px;
+  margin: 0 auto 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.copyright {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 100%;
+  }
+
+  .nav-links a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .submit-button, .speech-button {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .hero-section h2 {
+    font-size: 2rem;
+  }
+
+  .problem-input-section, .legal-charges-section {
+    padding: 1.5rem;
+  }
+}

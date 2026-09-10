@@ -1,109 +1,161 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+import sys
 import os
 
-from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain.prompts import PromptTemplate
-from langchain_together import Together
-from langchain.memory import ConversationBufferWindowMemory
-from langchain.chains import ConversationalRetrievalChain
+# Auto-inject the subfolder venv site-packages so Python can find langchain_community
+project_root = os.path.dirname(os.path.abspath(__file__))
+venv_site = os.path.join(project_root, "knowledge_engineering", "venv", "Lib", "site-packages")
+if os.path.exists(venv_site) and venv_site not in sys.path:
+    sys.path.insert(0, venv_site)
+
+# Make knowledge_engineering available for import
+ke_path = os.path.join(project_root, "knowledge_engineering")
+if ke_path not in sys.path:
+    sys.path.append(ke_path)
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from dotenv import load_dotenv
+
+# Import the new hybrid system
+from hybrid_system import HybridIPCSystem
 
 app = Flask(__name__)
-CORS(app, resources={r"/chat": {"origins": "*"}}, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
-# Setup API key
-TOGETHER_AI_API_KEY = ''
-os.environ['TOGETHER_API_KEY'] = TOGETHER_AI_API_KEY
+load_dotenv()
 
-# Load HuggingFace Embeddings
-embeddings = HuggingFaceEmbeddings(
-    model_name="nomic-ai/nomic-embed-text-v1",
-    model_kwargs={"trust_remote_code": True, "revision": "289f532e14dbbbd5a04753fa58739e9ba766f3c7"}
-)
+# Initialize the Rule-Based + RAG Hybrid System
+print("Initializing Hybrid IPC Legal Analysis System for API...")
+# Change directory to knowledge_engineering temporarily so it can find its JSON files
+original_cwd = os.getcwd()
+os.chdir(ke_path)
+try:
+    system = HybridIPCSystem()
+finally:
+    os.chdir(original_cwd)
 
-# Load FAISS DB
-db = FAISS.load_local("ipc_vector_db", embeddings, allow_dangerous_deserialization=True)
-retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": 4})
+# Load RAG DB explicitly for direct chat (so we don't reload it heavily on every request)
+def load_rag_retriever():
+    try:
+        from langchain_community.vectorstores import FAISS
+        from langchain_huggingface import HuggingFaceEmbeddings
 
-# Prompt
-prompt_template = """
-You are a knowledgeable and professional Legal Research Assistant trained in the Indian Penal Code (IPC).
+        embeddings = HuggingFaceEmbeddings(
+            model_name="nomic-ai/nomic-embed-text-v1",
+            model_kwargs={"trust_remote_code": True, "revision": "289f532e14dbbbd5a04753fa58739e9ba766f3c7"}
+        )
+        db_path = os.path.join(project_root, "ipc_vector_db")
+        db = FAISS.load_local(db_path, embeddings, allow_dangerous_deserialization=True)
+        return db, None
+    except Exception as e:
+        return None, str(e)
 
-Given the case description and IPC context, identify the most relevant IPC section(s). Your tone should be confident yet approachable.
-
-Your response should:
-- Start directly with the applicable IPC section(s) and their titles — no preface like "You might be charged..."
-- Provide a brief, human-readable explanation of the offense.
-- Mention the punishment clearly.
-- Optionally add a note about related sections (e.g., Section 338 if hurt becomes grievous).
-- Avoid robotic or speculative phrasing.
-- DO NOT use "You:", "It seems", or "Based on your case".
-
-Context:
-{context}
-
-Case:
-{question}
-
-Chat history (if any):
-{chat_history}
-
-Respond only with applicable IPC section(s), an explanation, and punishment. Keep the tone informative and slightly conversational, but professional.
-"""
-
-
-
-
-prompt = PromptTemplate.from_template(prompt_template)
-
-# TogetherAI LLM
-llm = Together(
-    model="mistralai/Mistral-7B-Instruct-v0.2",
-    temperature=0.5,
-    max_tokens=512
-)
-
-# Memory
-memory = ConversationBufferWindowMemory(k=2, memory_key="chat_history", return_messages=True)
-
-# Chain
-qa_chain = ConversationalRetrievalChain.from_llm(
-    llm=llm,
-    retriever=retriever,
-    memory=memory,
-    combine_docs_chain_kwargs={"prompt": prompt}
-)
+rag_db, rag_err = load_rag_retriever()
+if rag_err:
+    print(f"Warning: Failed to load FAISS db explicitly: {rag_err}")
 
 def is_ipc_related(question):
     keywords = ["ipc", "penal code", "indian penal code", "section", "crime", "offense", "punishment", "law", "repercussion", "legal"]
     return any(k in question.lower() for k in keywords)
 
-@app.route('/chat', methods=['POST', 'OPTIONS'])
-def chat():
+@app.route('/analyze_rule_based', methods=['POST', 'OPTIONS'])
+def analyze_rule_based():
+    """Handles deterministic Rule-Based Analysis."""
     if request.method == 'OPTIONS':
         return jsonify({'status': 'OK'}), 200
 
     data = request.json
     user_message = data.get('message', '').strip()
 
-    if is_ipc_related(user_message):
-        try:
-            result = qa_chain.invoke({"question": user_message})
-            return jsonify({'success': True, 'message': result['answer']})
-        except Exception as e:
-            return jsonify({'success': False, 'message': str(e)})
-    else:
-        return jsonify({
-            'success': False,
-            'message': "I am designed to answer questions specifically related to the Indian Penal Code (IPC). Please ask an IPC-related question."
-        })
+    if not user_message:
+        return jsonify({'success': False, 'message': 'No input provided.'})
 
-@app.route('/reset', methods=['POST'])
-def reset_conversation():
-    global memory
-    memory.clear()
-    return jsonify({'success': True, 'message': 'Conversation reset successfully'})
+    try:
+        results = system.analyze_case(user_message)
+        # Results contains: matched_sections, partial_matches, explanations, etc.
+        return jsonify({
+            'success': True,
+            'matched_sections': results.get('matched_sections', []),
+            'partial_matches': results.get('partial_matches', []),
+            'explanations': results.get('explanations', []),
+            'warnings': results.get('warnings', [])
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+
+
+@app.route('/analyze_rag', methods=['POST', 'OPTIONS'])
+def analyze_rag():
+    """Handles conversational AI RAG queries directly via Groq/Gemini SDK."""
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'OK'}), 200
+
+    data = request.json
+    question = data.get('message', '').strip()
+    chat_history = data.get('history', [])
+
+    if not question:
+        return jsonify({'success': False, 'message': 'No input provided.'})
+
+    groq_api_key = os.environ.get("GROQ_API_KEY")
+    google_api_key = os.environ.get("GOOGLE_API_KEY")
+
+    if not groq_api_key and not google_api_key:
+        return jsonify({'success': False, 'message': "⚠️ No LLM API Key found. Add `GROQ_API_KEY` or `GOOGLE_API_KEY` to your `.env`."})
+    
+    if not rag_db:
+         return jsonify({'success': False, 'message': "⚠️ Vector database unavailable, cannot perform RAG."})
+
+    try:
+        docs = rag_db.similarity_search(question, k=4)
+        context = "\n\n".join([doc.page_content for doc in docs])
+
+        history_text = ""
+        for msg in chat_history[-4:]:
+            role = "User" if msg["role"] == "user" else "Assistant"
+            history_text += f"{role}: {msg['content']}\n"
+
+        prompt = f"""You are a knowledgeable Legal Research Assistant trained in the Indian Penal Code (IPC).
+Given the case description and IPC context, identify the most relevant IPC section(s).
+Your response should:
+- Start directly with the applicable IPC section(s) and their titles.
+- Provide a brief, human-readable explanation of the offense and punishment.
+- Avoid robotic phrasing. DO NOT use "You:" or "Based on your case".
+
+Relevant IPC Context:
+{context}
+
+{f"Previous conversation:{chr(10)}{history_text}" if history_text else ""}
+
+User Question: {question}"""
+
+        if groq_api_key:
+            import groq
+            client = groq.Groq(api_key=groq_api_key)
+            response = client.chat.completions.create(
+                model="llama-3.1-8b-instant",
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.5
+            )
+            answer = response.choices[0].message.content
+        else:
+            import google.genai as genai
+            client = genai.Client(api_key=google_api_key)
+            response = client.models.generate_content(
+                model="gemini-1.5-flash",
+                contents=prompt,
+            )
+            answer = response.text
+
+        return jsonify({'success': True, 'message': answer})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+
+
+# Keep old /chat endpoint to not break existing frontend temporarily while refactoring is happening
+@app.route('/chat', methods=['POST', 'OPTIONS'])
+def chat():
+    return analyze_rag()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

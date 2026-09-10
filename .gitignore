@@ -1,14 +1,47 @@
-/extra
+# Environment & Secrets
+.env
+.env.*
+!.env.example
 
-/.kiro
+# IDEs & Editor configs (user requested to exclude)
+.continue/
+.kiro/
+.vscode/
+.idea/
+*.swp
+*.swo
 
-/.pytest_cache
+# Internal project documentation (user requested to exclude)
+project_detail.md
 
-/data
+# Python cache and bytecode
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*/.pytest_cache/
 
-/extra
+# Virtual Environments
+venv/
+*/venv/
+*/*/venv/
+env/
+.venv/
 
-/knowledge_engineering/__pycache__
-/knowledge_engineering/tests/__pycache__
-/knowledge_engineering/venv
+# Node / React Frontend Dependencies & Build outputs
+node_modules/
+Frontend/node_modules/
+Frontend/build/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
+# Large raw dataset / extra files
+/data/
+/extra/
+
+# Operating System Files
+.DS_Store
+Thumbs.db

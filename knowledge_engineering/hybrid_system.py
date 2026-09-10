@@ -864,38 +864,69 @@ class HybridIPCSystem:
 # ---------------------------------------------------------------------------
 
 def main():
-    """Run demo with sample cases."""
+    """Run interactive mode or demo with sample cases."""
+    import sys
+
     print("Initializing Hybrid IPC Legal Analysis System...")
     system = HybridIPCSystem()
 
-    test_cases = [
-        "A group of people entered my house without permission at night, "
-        "threatened me with a knife, and stole my laptop and jewelry.",
+    # If --demo flag is passed, run hardcoded test cases
+    if len(sys.argv) > 1 and sys.argv[1] == "--demo":
+        test_cases = [
+            "A group of people entered my house without permission at night, "
+            "threatened me with a knife, and stole my laptop and jewelry.",
 
-        "Someone forged my signature on a property document and sold my land "
-        "to another person.",
+            "Someone forged my signature on a property document and sold my land "
+            "to another person.",
 
-        "A man attacked a woman with acid after she rejected his proposal.",
+            "A man attacked a woman with acid after she rejected his proposal.",
 
-        "My business partner embezzled company funds that were entrusted to him "
-        "and fled the country.",
+            "My business partner embezzled company funds that were entrusted to him "
+            "and fled the country.",
 
-        "A mob gathered and set fire to several shops in the market.",
+            "A mob gathered and set fire to several shops in the market.",
 
-        "Someone spread false rumors about me on social media that damaged my "
-        "reputation in the community.",
+            "Someone spread false rumors about me on social media that damaged my "
+            "reputation in the community.",
 
-        "A drunk driver was speeding on the highway and hit a pedestrian who "
-        "later died in the hospital.",
+            "A drunk driver was speeding on the highway and hit a pedestrian who "
+            "later died in the hospital.",
 
-        "My husband and his family have been demanding dowry and torturing me "
-        "since our marriage two years ago.",
-    ]
+            "My husband and his family have been demanding dowry and torturing me "
+            "since our marriage two years ago.",
+        ]
 
-    for case in test_cases:
+        for case in test_cases:
+            results = system.analyze_case(case)
+            system.print_analysis(results)
+            print("\n")
+        return
+
+    # Interactive mode
+    print("\n" + "=" * 70)
+    print("  IPC LEGAL RESEARCH ASSISTANT - Interactive Mode")
+    print("  Describe your case in plain English and get relevant IPC sections.")
+    print("  Type 'quit' or 'exit' to stop.")
+    print("=" * 70 + "\n")
+
+    while True:
+        try:
+            case = input("Describe your case:\n> ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nGoodbye!")
+            break
+
+        if not case:
+            print("Please enter a case description.\n")
+            continue
+
+        if case.lower() in ("quit", "exit", "q"):
+            print("Goodbye!")
+            break
+
         results = system.analyze_case(case)
         system.print_analysis(results)
-        print("\n")
+        print()
 
 
 if __name__ == "__main__":
