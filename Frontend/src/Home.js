@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { FaMicrophone, FaStop, FaPaperPlane, FaSignOutAlt, FaRobot } from 'react-icons/fa';
+import { FaMicrophone, FaStop, FaPaperPlane, FaSignOutAlt, FaRobot, FaEnvelope, FaBolt, FaExclamationTriangle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { auth } from './firebase';
 import './Home.css';
@@ -229,6 +229,65 @@ const styles = {
     borderTopColor: 'white',
     animation: 'spin 1s ease-in-out infinite',
   },
+  quotaBadge: (remaining) => ({
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '0.4rem',
+    padding: '0.35rem 0.8rem',
+    borderRadius: '20px',
+    fontSize: '0.82rem',
+    fontWeight: 600,
+    background: remaining > 2 ? 'rgba(40, 167, 69, 0.15)' : remaining > 0 ? 'rgba(255, 193, 7, 0.2)' : 'rgba(220, 53, 69, 0.2)',
+    color: remaining > 2 ? '#28a745' : remaining > 0 ? '#b58105' : '#dc3545',
+    border: `1px solid ${remaining > 2 ? 'rgba(40, 167, 69, 0.3)' : remaining > 0 ? 'rgba(255, 193, 7, 0.4)' : 'rgba(220, 53, 69, 0.4)'}`,
+  }),
+  contactBanner: {
+    marginTop: '1rem',
+    padding: '1.1rem',
+    background: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: '10px',
+    border: '1px solid #ffc107',
+    borderLeft: '5px solid #dc3545',
+    color: '#333',
+    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+  },
+  mailButton: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    padding: '0.6rem 1.2rem',
+    backgroundColor: '#6c5ce7',
+    color: 'white',
+    borderRadius: '8px',
+    fontWeight: 600,
+    fontSize: '0.9rem',
+    textDecoration: 'none',
+    marginTop: '0.6rem',
+    cursor: 'pointer',
+    border: 'none',
+    boxShadow: '0 2px 8px rgba(108, 92, 231, 0.3)',
+  },
+  footerClause: {
+    marginTop: 'auto',
+    textAlign: 'center',
+    padding: '2.5rem 1rem 1rem',
+    color: 'rgba(255, 255, 255, 0.85)',
+    fontSize: '0.9rem',
+  },
+  footerMailLink: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    padding: '0.55rem 1.2rem',
+    background: 'rgba(255, 255, 255, 0.15)',
+    color: 'white',
+    borderRadius: '8px',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    textDecoration: 'none',
+    fontWeight: 500,
+    marginTop: '0.5rem',
+    backdropFilter: 'blur(5px)',
+  },
   responsive: {
     grid: {
       gridTemplateColumns: '1fr',
@@ -262,8 +321,32 @@ export default function Home() {
     { role: 'assistant', content: 'Hello! Ask me any specific question about the Indian Penal Code, or chat about an incident.' }
   ]);
   const [isChatLoading, setIsChatLoading] = useState(false);
+  const [quotaRemaining, setQuotaRemaining] = useState(5);
+  const [dailyLimit, setDailyLimit] = useState(5);
+  const [isRateLimited, setIsRateLimited] = useState(false);
   const chatEndRef = useRef(null);
   const navigate = useNavigate();
+
+  // Fetch initial user quota
+  useEffect(() => {
+    const fetchQuota = async () => {
+      const user = auth.currentUser;
+      if (user?.uid) {
+        try {
+          const res = await fetch(`http://127.0.0.1:5000/user_quota?user_id=${encodeURIComponent(user.uid)}`);
+          const data = await res.json();
+          if (data.success) {
+            setQuotaRemaining(data.remaining);
+            setDailyLimit(data.daily_limit);
+            setIsRateLimited(data.remaining <= 0);
+          }
+        } catch (e) {
+          console.log("Could not fetch user quota:", e);
+        }
+      }
+    };
+    fetchQuota();
+  }, []);
 
   // Init
   useEffect(() => {
@@ -341,18 +424,44 @@ export default function Home() {
 
   // 2. Submit Inline RAG Query (when partial match occurs)
   const submitInlineRag = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("🔒 Authentication Required: Please log in to query the AI RAG model.");
+      navigate('/signin');
+      return;
+    }
+
+    if (quotaRemaining <= 0) {
+      alert("⚠️ Daily Limit Reached: You have used your 5 free AI queries for today. Contact ashishsingh67788@gmail.com for extended access.");
+      setIsRateLimited(true);
+      return;
+    }
+
     setIsInlineRagLoading(true);
     try {
       const res = await fetch('http://127.0.0.1:5000/analyze_rag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: problemInput, history: [] }),
+        body: JSON.stringify({
+          message: problemInput,
+          history: [],
+          user_id: user.uid,
+          user_email: user.email
+        }),
       });
       const data = await res.json();
       if (data.success) {
         setInlineRagResponse(data.message);
+        if (typeof data.remaining === 'number') {
+          setQuotaRemaining(data.remaining);
+          setIsRateLimited(data.remaining <= 0);
+        }
       } else {
-        setInlineRagResponse("Error: " + data.message);
+        setInlineRagResponse(data.message);
+        if (data.rate_limited) {
+          setIsRateLimited(true);
+          setQuotaRemaining(0);
+        }
       }
     } catch (err) {
       setInlineRagResponse("Failed to connect to the RAG LLM engine.");
@@ -365,6 +474,26 @@ export default function Home() {
     e.preventDefault();
     if (!chatInput.trim() || isChatLoading) return;
 
+    const user = auth.currentUser;
+    if (!user) {
+      alert("🔒 Authentication Required: Please log in to chat with the AI assistant.");
+      navigate('/signin');
+      return;
+    }
+
+    if (quotaRemaining <= 0) {
+      setChatHistory(prev => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: "⚠️ Daily Limit Reached: You have used your 5 free AI queries for today. Please contact ashishsingh67788@gmail.com for extended access.",
+          rateLimited: true
+        }
+      ]);
+      setIsRateLimited(true);
+      return;
+    }
+
     const userMessage = chatInput;
     setChatInput('');
     setChatHistory(prev => [...prev, { role: 'user', content: userMessage }]);
@@ -374,13 +503,33 @@ export default function Home() {
       const res = await fetch('http://127.0.0.1:5000/analyze_rag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage, history: chatHistory }),
+        body: JSON.stringify({
+          message: userMessage,
+          history: chatHistory,
+          user_id: user.uid,
+          user_email: user.email
+        }),
       });
       const data = await res.json();
       if (data.success) {
         setChatHistory(prev => [...prev, { role: 'assistant', content: data.message }]);
+        if (typeof data.remaining === 'number') {
+          setQuotaRemaining(data.remaining);
+          setIsRateLimited(data.remaining <= 0);
+        }
       } else {
-        setChatHistory(prev => [...prev, { role: 'assistant', content: "⚠️ Error: " + data.message }]);
+        setChatHistory(prev => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: data.message,
+            rateLimited: Boolean(data.rate_limited)
+          }
+        ]);
+        if (data.rate_limited) {
+          setIsRateLimited(true);
+          setQuotaRemaining(0);
+        }
       }
     } catch (err) {
       setChatHistory(prev => [...prev, { role: 'assistant', content: "⚠️ Warning: Failed to reach backend." }]);
@@ -485,19 +634,43 @@ export default function Home() {
                          </div>
                        )}
 
-                       <p style={{fontSize:'0.9rem', fontWeight:600}}>
-                         Advice: For a deeper analysis of this nuanced scenario, we strongly recommend giving this same query to our RAG AI model.
-                       </p>
+                       <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', margin: '0.8rem 0 0.4rem'}}>
+                         <p style={{fontSize:'0.9rem', fontWeight:600, margin: 0}}>
+                           Advice: For a deeper analysis of this nuanced scenario, we strongly recommend giving this same query to our RAG AI model.
+                         </p>
+                         <span style={styles.quotaBadge(quotaRemaining)}>
+                           <FaBolt /> {quotaRemaining}/{dailyLimit} left
+                         </span>
+                       </div>
                        
                        <motion.button 
                          type="button" 
                          onClick={submitInlineRag} 
-                         style={{...styles.button, ...styles.ragButton}}
-                         whileHover={{scale:1.02}}
-                         disabled={isInlineRagLoading}
+                         style={{
+                           ...styles.button,
+                           ...styles.ragButton,
+                           opacity: quotaRemaining <= 0 ? 0.6 : 1,
+                           cursor: quotaRemaining <= 0 ? 'not-allowed' : 'pointer'
+                         }}
+                         whileHover={{scale: quotaRemaining <= 0 ? 1 : 1.02}}
+                         disabled={isInlineRagLoading || quotaRemaining <= 0}
                        >
                          {isInlineRagLoading ? <span style={styles.spinner}/> : <><FaRobot/> Analyze with RAG Model</>}
                        </motion.button>
+
+                       {quotaRemaining <= 0 && (
+                         <div style={{...styles.contactBanner, marginTop: '0.8rem'}}>
+                           <div style={{color: '#c0392b', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem'}}>
+                             <FaExclamationTriangle /> Daily AI Limit Reached (5/5)
+                           </div>
+                           <p style={{fontSize:'0.85rem', margin:'0.3rem 0', color:'#555'}}>
+                             You have reached your 5 free AI queries for today. If you want to contact for higher quota or queries, email us below:
+                           </p>
+                           <a href="mailto:ashishsingh67788@gmail.com?subject=Legal%20Advisor%20Quota%20Inquiry" style={styles.mailButton}>
+                             <FaEnvelope /> Contact: ashishsingh67788@gmail.com
+                           </a>
+                         </div>
+                       )}
 
                        {/* Inline RAG Result Space */}
                        {inlineRagResponse && (
@@ -523,9 +696,29 @@ export default function Home() {
           {activeTab === 'chat' && (
           <div style={styles.card}>
             <h3 style={styles.cardTitle}>💬 Conversational AI</h3>
-            <p style={{fontSize: '0.9rem', color: '#666', marginBottom: '1rem'}}>
-              Interact directly with the Generative AI referencing the FAISS database.
-            </p>
+            
+            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'0.8rem', flexWrap:'wrap', gap:'0.5rem'}}>
+              <p style={{fontSize: '0.9rem', color: '#666', margin: 0}}>
+                Interact directly with the Generative AI referencing the FAISS database.
+              </p>
+              <div style={styles.quotaBadge(quotaRemaining)}>
+                <FaBolt /> Daily Quota: {quotaRemaining} / {dailyLimit} left
+              </div>
+            </div>
+
+            {quotaRemaining <= 0 && (
+              <div style={{...styles.contactBanner, marginBottom: '1rem'}}>
+                <div style={{color: '#c0392b', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem'}}>
+                  <FaExclamationTriangle /> Daily AI Limit Reached (5/5)
+                </div>
+                <p style={{fontSize:'0.88rem', margin:'0.3rem 0', color:'#555'}}>
+                  Logged-in accounts receive 5 free AI queries per day. If you want to contact for extended limits or questions, email us below:
+                </p>
+                <a href="mailto:ashishsingh67788@gmail.com?subject=Legal%20Advisor%20Quota%20Inquiry" style={styles.mailButton}>
+                  <FaEnvelope /> Contact: ashishsingh67788@gmail.com
+                </a>
+              </div>
+            )}
 
             <div style={styles.chatContainer}>
               {chatHistory.map((msg, i) => (
@@ -534,6 +727,13 @@ export default function Home() {
                     {msg.role === 'user' ? 'You' : 'AI Assistant'}
                   </strong>
                   <span style={{whiteSpace:'pre-wrap', fontSize: '0.95rem'}}>{msg.content}</span>
+                  {msg.rateLimited && (
+                    <div style={{marginTop: '0.6rem'}}>
+                      <a href="mailto:ashishsingh67788@gmail.com?subject=Legal%20Advisor%20Quota%20Inquiry" style={styles.mailButton}>
+                        <FaEnvelope /> Contact: ashishsingh67788@gmail.com
+                      </a>
+                    </div>
+                  )}
                 </div>
               ))}
               <div ref={chatEndRef} />
@@ -542,18 +742,47 @@ export default function Home() {
             <form onSubmit={submitChat} style={styles.chatInputRow}>
               <input
                 type="text"
-                placeholder="Ask about a section or punishment..."
+                placeholder={quotaRemaining <= 0 ? "Daily quota of 5 queries reached. Contact us for access." : "Ask about a section or punishment..."}
                 value={chatInput}
+                disabled={quotaRemaining <= 0 || isChatLoading}
                 onChange={(e) => setChatInput(e.target.value)}
-                style={styles.chatInput}
+                style={{
+                  ...styles.chatInput,
+                  backgroundColor: quotaRemaining <= 0 ? '#f5f5f5' : 'white',
+                  cursor: quotaRemaining <= 0 ? 'not-allowed' : 'text'
+                }}
               />
-              <motion.button type="submit" disabled={isChatLoading} style={{...styles.button, ...styles.submitButton, flex: '0 0 auto'}} whileHover={{scale:1.05}}>
+              <motion.button 
+                type="submit" 
+                disabled={isChatLoading || quotaRemaining <= 0} 
+                style={{
+                  ...styles.button, 
+                  ...styles.submitButton, 
+                  flex: '0 0 auto',
+                  opacity: quotaRemaining <= 0 ? 0.5 : 1,
+                  cursor: quotaRemaining <= 0 ? 'not-allowed' : 'pointer'
+                }} 
+                whileHover={{scale: quotaRemaining <= 0 ? 1 : 1.05}}
+              >
                 {isChatLoading ? <span style={styles.spinner}/> : <FaPaperPlane/>}
               </motion.button>
             </form>
           </div>
           )}
         </div>
+
+        {/* CONTACT CLAUSE FOOTER */}
+        <footer style={styles.footerClause}>
+          <p style={{margin: '0 0 0.4rem 0'}}>
+            ⚖️ <strong>Legal Research Assistant</strong> • Daily limit: 5 AI queries per user.
+          </p>
+          <p style={{margin: '0 0 0.6rem 0', opacity: 0.9}}>
+            If you want to contact for support, extended API limits, or general questions:
+          </p>
+          <a href="mailto:ashishsingh67788@gmail.com?subject=Legal%20Advisor%20Support%20Inquiry" style={styles.footerMailLink}>
+            <FaEnvelope /> Contact: ashishsingh67788@gmail.com
+          </a>
+        </footer>
       </main>
     </div>
   );

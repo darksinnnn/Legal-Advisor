@@ -283,22 +283,50 @@ Unified Flask Server (`integrate.py` on port 5000):
   }
   ```
 
-### 2. RAG Generative Analysis / Fallback
+### 2. RAG Generative Analysis / Fallback (Rate Limited)
 - **Endpoint**: `POST /analyze_rag`
+- **Authentication**: Requires a logged-in `user_id`
+- **Rate Limit**: Max 5 requests per day per user
 - **Payload**:
   ```json
   {
     "message": "What are the legal implications of forging a signature on property documents?",
-    "history": []
+    "history": [],
+    "user_id": "firebase_user_unique_id",
+    "user_email": "user@example.com"
   }
   ```
 - **Response**:
   ```json
   {
     "success": true,
-    "message": "Relevant sections include IPC Section 463 (Forgery) and Section 465 (Punishment for forgery)..."
+    "message": "Relevant sections include IPC Section 463 (Forgery) and Section 465 (Punishment for forgery)...",
+    "model": "qwen/qwen3.8-27b",
+    "remaining": 4,
+    "daily_limit": 5,
+    "contact_email": "ashishsingh67788@gmail.com"
   }
   ```
+
+### 3. User Daily Quota Check
+- **Endpoint**: `GET /user_quota?user_id=<user_id>`
+- **Response**:
+  ```json
+  {
+    "success": true,
+    "user_id": "firebase_user_unique_id",
+    "remaining": 5,
+    "daily_limit": 5,
+    "contact_email": "ashishsingh67788@gmail.com"
+  }
+  ```
+
+---
+
+## 📬 Contact & Support
+
+For queries regarding extended AI quota, custom legal corpus training, or enterprise deployment:
+- **Email**: [ashishsingh67788@gmail.com](mailto:ashishsingh67788@gmail.com?subject=Legal%20Research%20Assistant%20Inquiry)
 
 ---
 

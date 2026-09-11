@@ -84,6 +84,14 @@ def analyze_rule_based():
         return jsonify({'success': False, 'message': str(e)})
 
 
+from rate_limiter import (
+    check_and_increment_rate_limit,
+    get_user_quota,
+    DAILY_LIMIT,
+    CONTACT_EMAIL
+)
+
+
 def get_groq_model(client):
     preferred = os.environ.get("GROQ_MODEL")
     if preferred:
@@ -108,18 +116,69 @@ def get_groq_model(client):
     return "llama-3.3-70b-versatile"
 
 
+@app.route('/user_quota', methods=['POST', 'GET', 'OPTIONS'])
+def user_quota_endpoint():
+    """Returns the remaining daily quota for a logged in user."""
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'OK'}), 200
+
+    user_id = request.args.get('user_id')
+    if not user_id and request.is_json:
+        user_id = request.json.get('user_id')
+
+    if not user_id:
+        return jsonify({
+            'success': False,
+            'message': 'No user identifier provided.',
+            'remaining': 0,
+            'daily_limit': DAILY_LIMIT,
+            'contact_email': CONTACT_EMAIL
+        }), 400
+
+    remaining, limit = get_user_quota(user_id)
+    return jsonify({
+        'success': True,
+        'user_id': user_id,
+        'remaining': remaining,
+        'daily_limit': limit,
+        'contact_email': CONTACT_EMAIL
+    })
+
+
 @app.route('/analyze_rag', methods=['POST', 'OPTIONS'])
 def analyze_rag():
-    """Handles conversational AI RAG queries directly via Groq LLM."""
+    """Handles conversational AI RAG queries directly via Groq LLM with rate limiting."""
     if request.method == 'OPTIONS':
         return jsonify({'status': 'OK'}), 200
 
     data = request.json or {}
     question = data.get('message', '').strip()
     chat_history = data.get('history', [])
+    user_id = data.get('user_id') or request.headers.get('X-User-Id')
 
     if not question:
         return jsonify({'success': False, 'message': 'No input provided.'})
+
+    # 1. Require user to be logged in
+    if not user_id:
+        return jsonify({
+            'success': False,
+            'message': "🔒 Login Required: Only logged-in users are permitted to query the AI LLM assistant. Please sign in to continue.",
+            'requires_login': True,
+            'contact_email': CONTACT_EMAIL
+        }), 401
+
+    # 2. Check and enforce 5 queries/day rate limit
+    is_allowed, remaining, limit = check_and_increment_rate_limit(user_id)
+    if not is_allowed:
+        return jsonify({
+            'success': False,
+            'message': f"⚠️ Daily Limit Reached: You have used your {limit} free AI legal queries for today. Please try again tomorrow, or contact {CONTACT_EMAIL} for extended quota.",
+            'rate_limited': True,
+            'remaining': 0,
+            'daily_limit': limit,
+            'contact_email': CONTACT_EMAIL
+        }), 429
 
     # Reload environment to pick up any key updates in .env dynamically
     load_dotenv(override=True)
@@ -128,7 +187,8 @@ def analyze_rag():
     if not groq_api_key:
         return jsonify({
             'success': False,
-            'message': "⚠️ No Groq API Key found. Please add `GROQ_API_KEY=your_key` to your `.env` file."
+            'message': "⚠️ No Groq API Key found. Please add `GROQ_API_KEY=your_key` to your `.env` file.",
+            'contact_email': CONTACT_EMAIL
         })
     
     if not rag_db:
@@ -167,9 +227,16 @@ User Question: {question}"""
         )
         answer = response.choices[0].message.content
 
-        return jsonify({'success': True, 'message': answer, 'model': model})
+        return jsonify({
+            'success': True,
+            'message': answer,
+            'model': model,
+            'remaining': remaining,
+            'daily_limit': limit,
+            'contact_email': CONTACT_EMAIL
+        })
     except Exception as e:
-        return jsonify({'success': False, 'message': str(e)})
+        return jsonify({'success': False, 'message': str(e), 'contact_email': CONTACT_EMAIL})
 
 
 # Keep old /chat endpoint to not break existing frontend temporarily while refactoring is happening

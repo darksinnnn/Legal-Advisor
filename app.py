@@ -230,10 +230,21 @@ def get_groq_model(client):
     return "llama-3.3-70b-versatile"
 
 
-def get_rag_response(db, question: str, chat_history: list) -> str:
-    """Use Groq SDK for fast conversational legal analysis."""
+def get_rag_response(db, question: str, chat_history: list, user_id: str = "streamlit_user") -> str:
+    """Use Groq SDK for fast conversational legal analysis with daily rate limiting."""
     from dotenv import load_dotenv
     load_dotenv(override=True)
+
+    from rate_limiter import check_and_increment_rate_limit, DAILY_LIMIT, CONTACT_EMAIL
+
+    # Enforce 5 queries/day rate limit
+    is_allowed, remaining, limit = check_and_increment_rate_limit(user_id)
+    if not is_allowed:
+        return (
+            f"⚠️ **Daily Quota Reached**: You have reached the limit of {limit} free AI legal queries for today.\n\n"
+            f"If you need extended access or custom legal analysis, please contact us at "
+            f"[{CONTACT_EMAIL}](mailto:{CONTACT_EMAIL}?subject=Legal%20Advisor%20Quota%20Inquiry)."
+        )
 
     groq_api_key = os.environ.get("GROQ_API_KEY")
 
@@ -435,3 +446,21 @@ with tab2:
             if st.button("🗑️ Clear Chat", use_container_width=True):
                 st.session_state.messages = []
                 st.rerun()
+
+# ── Contact Clause Footer ─────────────────────────────────────────────
+st.markdown("---")
+st.markdown(
+    """
+    <div style="text-align: center; padding: 1.5rem 0; color: #a1a1aa; font-size: 0.95rem;">
+        <p style="margin-bottom: 0.8rem;">
+            ⚖️ <strong>IPC Legal Research Assistant</strong> • Daily LLM Limit: 5 queries per user.<br/>
+            Need higher query limits, dedicated API integration, or have legal questions?
+        </p>
+        <a href="mailto:ashishsingh67788@gmail.com?subject=Legal%20Advisor%20Inquiry%20-%20Extended%20Quota" 
+           style="background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; padding: 0.6rem 1.4rem; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);">
+            ✉️ Contact: ashishsingh67788@gmail.com
+        </a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
