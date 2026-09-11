@@ -191,13 +191,15 @@ def analyze_rag():
             'contact_email': CONTACT_EMAIL
         })
     
-    if not rag_db:
-        return jsonify({'success': False, 'message': "⚠️ Vector database unavailable, cannot perform RAG."})
+    context = ""
+    if rag_db:
+        try:
+            docs = rag_db.similarity_search(question, k=4)
+            context = "\n\n".join([doc.page_content for doc in docs])
+        except Exception as e:
+            print(f"RAG search notice: {e}")
 
     try:
-        docs = rag_db.similarity_search(question, k=4)
-        context = "\n\n".join([doc.page_content for doc in docs])
-
         history_text = ""
         for msg in chat_history[-4:]:
             role = "User" if msg.get("role") == "user" else "Assistant"
