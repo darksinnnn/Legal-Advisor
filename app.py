@@ -6,6 +6,12 @@ Describe a case in plain English and get relevant IPC sections.
 import sys
 import os
 
+# Expose top-level Flask app for Vercel/WSGI serverless detection
+try:
+    from integrate import app
+except Exception:
+    pass
+
 project_root = os.path.dirname(os.path.abspath(__file__))
 
 # Auto-inject the subfolder venv site-packages so Streamlit can find langchain_community
