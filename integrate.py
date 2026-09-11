@@ -244,5 +244,16 @@ User Question: {question}"""
 def chat():
     return analyze_rag()
 
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({
+        'status': 'healthy',
+        'service': 'Legal Research Assistant API',
+        'model_provider': 'Groq',
+        'rate_limit_daily': DAILY_LIMIT,
+        'contact_email': CONTACT_EMAIL,
+        'rag_db_loaded': rag_db is not None
+    }), 200
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
