@@ -84,27 +84,55 @@ def analyze_rule_based():
         return jsonify({'success': False, 'message': str(e)})
 
 
+def get_groq_model(client):
+    preferred = os.environ.get("GROQ_MODEL")
+    if preferred:
+        return preferred
+    candidates = [
+        "llama-3.3-70b-versatile",
+        "llama-3.1-8b-instant",
+        "qwen/qwen3.8-27b",
+        "openai/gpt-oss-120b",
+        "groq/compound"
+    ]
+    try:
+        available = {m.id for m in client.models.list().data}
+        for c in candidates:
+            if c in available:
+                return c
+        chat_models = [m for m in available if "whisper" not in m and "guard" not in m]
+        if chat_models:
+            return chat_models[0]
+    except Exception:
+        pass
+    return "llama-3.3-70b-versatile"
+
+
 @app.route('/analyze_rag', methods=['POST', 'OPTIONS'])
 def analyze_rag():
-    """Handles conversational AI RAG queries directly via Groq/Gemini SDK."""
+    """Handles conversational AI RAG queries directly via Groq LLM."""
     if request.method == 'OPTIONS':
         return jsonify({'status': 'OK'}), 200
 
-    data = request.json
+    data = request.json or {}
     question = data.get('message', '').strip()
     chat_history = data.get('history', [])
 
     if not question:
         return jsonify({'success': False, 'message': 'No input provided.'})
 
+    # Reload environment to pick up any key updates in .env dynamically
+    load_dotenv(override=True)
     groq_api_key = os.environ.get("GROQ_API_KEY")
-    google_api_key = os.environ.get("GOOGLE_API_KEY")
 
-    if not groq_api_key and not google_api_key:
-        return jsonify({'success': False, 'message': "⚠️ No LLM API Key found. Add `GROQ_API_KEY` or `GOOGLE_API_KEY` to your `.env`."})
+    if not groq_api_key:
+        return jsonify({
+            'success': False,
+            'message': "⚠️ No Groq API Key found. Please add `GROQ_API_KEY=your_key` to your `.env` file."
+        })
     
     if not rag_db:
-         return jsonify({'success': False, 'message': "⚠️ Vector database unavailable, cannot perform RAG."})
+        return jsonify({'success': False, 'message': "⚠️ Vector database unavailable, cannot perform RAG."})
 
     try:
         docs = rag_db.similarity_search(question, k=4)
@@ -112,8 +140,8 @@ def analyze_rag():
 
         history_text = ""
         for msg in chat_history[-4:]:
-            role = "User" if msg["role"] == "user" else "Assistant"
-            history_text += f"{role}: {msg['content']}\n"
+            role = "User" if msg.get("role") == "user" else "Assistant"
+            history_text += f"{role}: {msg.get('content', '')}\n"
 
         prompt = f"""You are a knowledgeable Legal Research Assistant trained in the Indian Penal Code (IPC).
 Given the case description and IPC context, identify the most relevant IPC section(s).
@@ -129,25 +157,17 @@ Relevant IPC Context:
 
 User Question: {question}"""
 
-        if groq_api_key:
-            import groq
-            client = groq.Groq(api_key=groq_api_key)
-            response = client.chat.completions.create(
-                model="llama-3.1-8b-instant",
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.5
-            )
-            answer = response.choices[0].message.content
-        else:
-            import google.genai as genai
-            client = genai.Client(api_key=google_api_key)
-            response = client.models.generate_content(
-                model="gemini-1.5-flash",
-                contents=prompt,
-            )
-            answer = response.text
+        import groq
+        client = groq.Groq(api_key=groq_api_key)
+        model = get_groq_model(client)
+        response = client.chat.completions.create(
+            model=model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.3
+        )
+        answer = response.choices[0].message.content
 
-        return jsonify({'success': True, 'message': answer})
+        return jsonify({'success': True, 'message': answer, 'model': model})
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
 

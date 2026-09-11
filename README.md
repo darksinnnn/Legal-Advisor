@@ -5,10 +5,10 @@
 [![Flask](https://img.shields.io/badge/flask-3.0+-black.svg)](https://flask.palletsprojects.com/)
 [![Streamlit](https://img.shields.io/badge/streamlit-1.30+-FF4B4B.svg)](https://streamlit.io/)
 [![FAISS](https://img.shields.io/badge/vector_db-FAISS-green.svg)](https://github.com/facebookresearch/faiss)
-[![LLM](https://img.shields.io/badge/LLM-Groq%20%7C%20Gemini-orange.svg)](https://groq.com/)
+[![LLM](https://img.shields.io/badge/LLM-Groq-orange.svg)](https://groq.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> An intelligent, dual-engine legal research platform designed to analyze natural language case facts and accurately identify applicable sections of the **Indian Penal Code (IPC)**. It combines a deterministic **Rule-Based Expert System** with a generative **Retrieval-Augmented Generation (RAG)** pipeline.
+> An intelligent, dual-engine legal research platform designed to analyze natural language case facts and accurately identify applicable sections of the **Indian Penal Code (IPC)**. It combines a deterministic **Rule-Based Expert System** with a generative **Retrieval-Augmented Generation (RAG)** pipeline powered by **Groq**.
 
 ---
 
@@ -37,7 +37,7 @@ Legal research in criminal law demands high precision and transparency. Traditio
 
 The **IPC Legal Research Assistant** addresses these challenges via a hybrid paradigm:
 1. **Primary Deterministic Engine (Expert System)**: Evaluates case descriptions through NLP fact extraction and a forward-chaining rule engine across **158 formal IPC section rules**. Offers Explainable AI (XAI) traces with matched facts and missing conditions.
-2. **Secondary Generative Engine (RAG AI)**: Leverages FAISS vector search (`nomic-embed-text-v1`) on official IPC law documents combined with state-of-the-art LLMs (Groq Llama 3.1 / Google Gemini) for flexible conversational Q&A.
+2. **Secondary Generative Engine (RAG AI)**: Leverages FAISS vector search (`nomic-embed-text-v1`) on official IPC law documents combined with ultra-fast LLM inference via **Groq** for conversational Q&A.
 3. **Intelligent Fallback**: If the rule base finds only partial matches due to ambiguous or missing facts, the UI transparently alerts the user and enables one-click escalation to the RAG engine inline.
 
 ---
@@ -68,7 +68,7 @@ graph TB
 
     subgraph Retrieval_LLM ["RAG & AI Services"]
         FAISS_DB["FAISS Vector DB<br/>(nomic-embed-text-v1)"]
-        LLM_Service["LLM Provider<br/>(Groq Llama 3.1 / Gemini 1.5)"]
+        LLM_Service["LLM Provider<br/>(Groq High-Speed Inference)"]
     end
 
     ReactUI -->|"POST /analyze_rule_based"| RB_Route
@@ -110,7 +110,7 @@ graph TB
 ### 2. RAG Conversational AI (Generative)
 1. **Retrieval**: User case descriptions are embedded with `nomic-embed-text-v1` and matched against the local FAISS index (`ipc_vector_db`).
 2. **Context Augmentation**: Top-$k$ legal text segments are formatted into an instruction-tuned prompt.
-3. **Generation**: Groq (`llama-3.1-8b-instant`) or Google Gemini (`gemini-1.5-flash`) generates structured legal findings with statutory explanations.
+3. **Generation**: Groq generates structured legal findings with statutory explanations using available models (auto-detected or configurable via `GROQ_MODEL`).
 
 ### 3. Intelligent Fallback UX
 
@@ -163,7 +163,7 @@ graph TB
 
 - **Python**: Version 3.10 or higher
 - **Node.js**: Version 18 or higher (for the React frontend)
-- **API Key**: A free [Groq API Key](https://console.groq.com/) or [Google Gemini API Key](https://aistudio.google.com/)
+- **API Key**: A free [Groq API Key](https://console.groq.com/keys) (Required for RAG Conversational AI)
 
 ---
 
@@ -198,8 +198,6 @@ cp .env.example .env
 Open `.env` and set your credentials:
 ```env
 GROQ_API_KEY=gsk_your_groq_api_key_here
-# OR
-GOOGLE_API_KEY=your_gemini_api_key_here
 PORT=5000
 ```
 
