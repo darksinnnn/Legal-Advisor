@@ -22,6 +22,13 @@ import { auth } from './firebase';
 import './Home.css';
 
 // Curated legal scenario presets for instant 1-click testing
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL ||
+  import.meta.env.VITE_API_URL ||
+  (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://127.0.0.1:5000'
+    : 'https://legal-advisor-green.vercel.app');
+
 const CASE_PRESETS = [
   {
     label: "🔪 Premeditated Murder",
@@ -94,7 +101,7 @@ export default function Home() {
       const user = auth.currentUser;
       if (user?.uid) {
         try {
-          const res = await fetch(`http://127.0.0.1:5000/user_quota?user_id=${encodeURIComponent(user.uid)}`);
+          const res = await fetch(`${API_BASE_URL}/user_quota?user_id=${encodeURIComponent(user.uid)}`);
           const data = await res.json();
           if (data.success) {
             setQuotaRemaining(data.remaining);
@@ -182,7 +189,7 @@ export default function Home() {
     setShowPartial(false);
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/analyze_rule_based', {
+      const res = await fetch(`${API_BASE_URL}/analyze_rule_based`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: problemInput.trim() }),
@@ -195,7 +202,7 @@ export default function Home() {
       }
     } catch (err) {
       console.error(err);
-      alert("Unable to reach backend inference server (http://127.0.0.1:5000). Ensure integrate.py is running.");
+      alert(`Unable to reach backend inference server (${API_BASE_URL}). Ensure backend service is active.`);
     }
     setIsAnalyzing(false);
   };
@@ -217,7 +224,7 @@ export default function Home() {
 
     setIsInlineRagLoading(true);
     try {
-      const res = await fetch('http://127.0.0.1:5000/analyze_rag', {
+      const res = await fetch(`${API_BASE_URL}/analyze_rag`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -278,7 +285,7 @@ export default function Home() {
     setIsChatLoading(true);
 
     try {
-      const res = await fetch('http://127.0.0.1:5000/analyze_rag', {
+      const res = await fetch(`${API_BASE_URL}/analyze_rag`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

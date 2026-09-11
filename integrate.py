@@ -246,6 +246,22 @@ User Question: {question}"""
 def chat():
     return analyze_rag()
 
+@app.route('/', methods=['GET'])
+def root():
+    return jsonify({
+        'status': 'online',
+        'service': 'Juris - Your Legal Research Assistant API',
+        'model_provider': 'Groq',
+        'rate_limit_daily': DAILY_LIMIT,
+        'contact_email': CONTACT_EMAIL,
+        'endpoints': {
+            'health': '/health',
+            'rule_based_analysis': '/analyze_rule_based',
+            'conversational_rag': '/analyze_rag',
+            'user_quota': '/user_quota'
+        }
+    }), 200
+
 @app.route('/health', methods=['GET'])
 def health():
     return jsonify({
